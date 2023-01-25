@@ -5,8 +5,8 @@ function Pet({ name, voice, avatar }) {
     return (
         <View>
             <Text>{name}</Text>
-            <View>{`Voice - ${voice}`}</View>
-            <View>{avatar}</View>
+            <View><Text>{`Voice - ${voice}`}</Text></View>
+            <View><Text>{avatar}</Text></View>
         </View>
     );
 }
