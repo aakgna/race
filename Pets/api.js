@@ -4,10 +4,11 @@ const petsDB = {
 };
 
 export function getPet(type) {
+    const delay = type === "cats" ? 3500 : 500;
     return new Promise(resolve => {
         // immulate fetch call
         setTimeout(() => {
             resolve(petsDB[type]);
-        }, 1000);
+        }, delay);
     });
 }
