@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { getPet } from "./api";
 import initialState from "./initialState";
 import Pet from "./Pet";
 import { Text, View } from "react-native";
-import { SelectList } from 'react-native-dropdown-select-list'
+import SelectDropdown from 'react-native-select-dropdown'
 
 
 function petsReducer(state, action) {
@@ -40,7 +40,6 @@ function petsReducer(state, action) {
 
 function Pets() {
     const [pets, dispatch] = useReducer(petsReducer, initialState);
-
     const onChange = ({ target }) => {
         dispatch({ type: "PET_SELECTED", payload: target.value });
     };
@@ -56,19 +55,19 @@ function Pets() {
         }
     }, [pets.selectedPet]);
 
-    const [selected, setSelected] = React.useState("");
-    const data = [{ key: '1', value: "" }, { key: '2', value: 'cats' }, { key: '3', value: 'dogs' },]
+    const data = ["cats", "dogs"]
 
     return (
         <View>
-            <SelectList onSelect={this.onChange} data={data} setSelected={setSelected} />
-            {/* <select value={pets.selectedPet} onChange={onChange}>
-                <option value="">Select a pet</option>
-                <option value="cats">Cats</option>
-                <option value="dogs">Dogs</option>
-            </select> */}
-            {pets.loading && <View>Loading...</View>}
-            {pets.petData && <Pet {...pets.petData} />}
+            <SelectDropdown
+                data={data}
+                onSelect={selection => {
+                    dispatch({ type: "PET_SELECTED", payload: selection })
+                }}
+            />
+
+            {pets.loading && <View><Text>Loading...</Text></View>}
+            {pets.petData && <View><Pet {...pets.petData} /></View>}
         </View>
     );
 }
